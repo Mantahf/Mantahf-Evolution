@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Simple Sac Calculator</title>
+</head>
+<body>
+   <h1> Welcome to Wet Owls SAC Calculator. </h1>
+   <h1> Ver 1.1</h1>
+    <h2 id="yourSacRate"></h2>
+
+    <script>
+        //INITIALIZATION
+        var arr = [10,33];
+        let name;
+        let units;
+        let check;
+        let tankPressure;
+
+        init();
+
+        function init() {
+            name = prompt("What is your name");
+            units = prompt( `Hello ${name}! Do you want to work in (M)etric or (I)mperial`);
+
+            if (['M','m'].includes(units)) {
+                check = 0;
+            } else if(['I','i'].includes(units)) {
+                check = 1;
+            } else {
+                window.alert('Please check your response!');
+                init();
+            }
+        };
+
+        let tank = parseFloat(prompt(`What is the size of your tank? in ${check === 0 ? 'Lts': 'cu ft'}`));
+        let time = parseFloat(prompt("For how long? in Minutes."));
+        let depth = parseFloat(prompt(`What was the depth? In ${check === 0 ? 'Mts': 'Ft'}.`));
+        if (check === 1) {
+            tankPressure = parseFloat(prompt("What is the working Pressure of your tanks. In psi"));
+        }
+        let firstRead = parseFloat(prompt(`How many ${check === 0 ? 'bar' : 'psi'} do you start?`));
+        let secondRead = parseFloat(prompt(`How many ${check === 0 ? 'bar' : 'psi'} do you end with?`));
+
+        var result = check === 0
+            ? ((((firstRead - secondRead) * tank) / ((depth + arr[check]) / arr[check])) / time)
+            : (((((firstRead - secondRead) / tankPressure) * tank) / ((depth + arr[check]) / arr[check])) / time);
+
+        let yourSacRateImp = document.getElementById("yourSacRate");
+        yourSacRateImp.innerText = `Your SAC Rate ${name} is ${result.toFixed(2)} ${check === 0 ? 'Lts' : 'Cubic feet'} per minute.`;
+    </script>
+</body>
+</html>
